@@ -175,7 +175,7 @@ class AnimatedMultiDayEventsHeader<T> extends StatelessWidget {
           builder: (context, child) {
             final events = scope.eventsController.getMultiDayEventsFromDateRange(visibleDateRange);
 
-            final multiDayEventGroup = MultiDayEventGroupController<T>().generateMultiDayEventGroup(
+            final multiDayEventGroup = MultiDayEventGroup.fromEvents(
               events: events,
             );
 
@@ -210,7 +210,7 @@ class AnimatedMultiDayEventsHeader<T> extends StatelessWidget {
                       ListenableBuilder(
                         listenable: scope.eventsController.selectedEvent!,
                         builder: (context, child) {
-                          final multiDayEventGroup = MultiDayEventGroupController<T>().generateMultiDayEventGroup(
+                          final multiDayEventGroup = MultiDayEventGroup.fromEvents(
                             events: [selectedEvent],
                           );
 

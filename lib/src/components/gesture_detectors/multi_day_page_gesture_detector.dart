@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:kalender/kalender.dart';
 import 'package:kalender/src/constants.dart';
 
@@ -21,19 +22,16 @@ class MultiDayPageGestureDetector<T> extends StatefulWidget {
   final double verticalStep;
 
   @override
-  State<MultiDayPageGestureDetector<T>> createState() =>
-      _MultiDayPageGestureDetectorState<T>();
+  State<MultiDayPageGestureDetector<T>> createState() => _MultiDayPageGestureDetectorState<T>();
 }
 
-class _MultiDayPageGestureDetectorState<T>
-    extends State<MultiDayPageGestureDetector<T>> {
+class _MultiDayPageGestureDetectorState<T> extends State<MultiDayPageGestureDetector<T>> {
   CalendarScope<T> get scope => CalendarScope.of<T>(context);
   CalendarEventsController<T> get controller => scope.eventsController;
   bool get isMobileDevice => scope.platformData.isMobileDevice;
   bool get createEvents => widget.viewConfiguration.createEvents;
 
-  int get newEventDurationInMinutes =>
-      widget.viewConfiguration.newEventDuration.inMinutes;
+  int get newEventDurationInMinutes => widget.viewConfiguration.newEventDuration.inMinutes;
 
   double cursorOffset = 0;
   int currentVerticalSteps = 0;
@@ -41,8 +39,7 @@ class _MultiDayPageGestureDetectorState<T>
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor:
-          createEvents ? SystemMouseCursors.click : SystemMouseCursors.basic,
+      cursor: createEvents ? SystemMouseCursors.click : SystemMouseCursors.basic,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -54,6 +51,7 @@ class _MultiDayPageGestureDetectorState<T>
                   (slotIndex) => Expanded(
                     child: SizedBox.expand(
                       child: GestureDetector(
+                        supportedDevices: [PointerDeviceKind.mouse].toSet(),
                         onLongPress: () => widget.viewConfiguration.createEventTrigger == CreateEventTrigger.longPress
                             ? _createEvent(calculateNewEventDateTimeRange(date, slotIndex))
                             : controller.deselectEvent(),
@@ -69,9 +67,7 @@ class _MultiDayPageGestureDetectorState<T>
                                     slotIndex,
                                   ),
                                 ),
-                        onVerticalDragEnd: isMobileDevice || !createEvents
-                            ? null
-                            : _onVerticalDragEnd,
+                        onVerticalDragEnd: isMobileDevice || !createEvents ? null : _onVerticalDragEnd,
                         onVerticalDragUpdate: isMobileDevice || !createEvents
                             ? null
                             : (details) => _onVerticalDragUpdate(

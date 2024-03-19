@@ -23,8 +23,7 @@ class MultiDayViewState extends ViewState {
     required MultiDayViewConfiguration viewConfiguration,
     required MultiDayViewState? previousState,
   }) {
-    final adjustedDateTimeRange =
-        viewConfiguration.calculateAdjustedDateTimeRange(
+    final adjustedDateTimeRange = viewConfiguration.calculateAdjustedDateTimeRange(
       dateTimeRange: dateTimeRange,
       visibleStart: selectedDate,
     );
@@ -40,6 +39,7 @@ class MultiDayViewState extends ViewState {
 
     final pageController = PageController(
       initialPage: initialPage,
+      viewportFraction: 1 / viewConfiguration.numberOfDaysReal,
     );
 
     final visibleDateRange = viewConfiguration.calculateVisibleDateTimeRange(
@@ -62,8 +62,7 @@ class MultiDayViewState extends ViewState {
       numberOfPages: numberOfPages,
       pageController: pageController,
       scrollController: scrollController,
-      heightPerMinute: previousState?.heightPerMinute ??
-          ValueNotifier(viewConfiguration.heightPerMinute),
+      heightPerMinute: previousState?.heightPerMinute ?? ValueNotifier(viewConfiguration.heightPerMinute),
     );
   }
 
@@ -87,8 +86,7 @@ class MultiDayViewState extends ViewState {
   final ValueNotifier<double> heightPerMinute;
 
   /// The scrollPhysics of the current view.
-  ValueNotifier<ScrollPhysics> scrollPhysics =
-      ValueNotifier<ScrollPhysics>(const ScrollPhysics());
+  ValueNotifier<ScrollPhysics> scrollPhysics = ValueNotifier<ScrollPhysics>(const ScrollPhysics());
 
   /// The adjusted dateTimeRange of the current view.
   @override
@@ -134,9 +132,7 @@ class MultiDayViewState extends ViewState {
       curve: curve ?? Curves.ease,
     );
     // Calculate the event position.
-    final eventPosition =
-        event.start.difference(event.start.startOfDay).inMinutes *
-            heightPerMinute.value;
+    final eventPosition = event.start.difference(event.start.startOfDay).inMinutes * heightPerMinute.value;
 
     double scrollPosition;
 
@@ -147,8 +143,7 @@ class MultiDayViewState extends ViewState {
       // If the event is smaller than the viewport, center the event.
       if (eventHeight < scrollController.position.viewportDimension) {
         // Calculate the scroll position to center the event.
-        scrollPosition = eventPosition -
-            (scrollController.position.viewportDimension - eventHeight) / 2;
+        scrollPosition = eventPosition - (scrollController.position.viewportDimension - eventHeight) / 2;
       } else {
         scrollPosition = eventPosition;
       }

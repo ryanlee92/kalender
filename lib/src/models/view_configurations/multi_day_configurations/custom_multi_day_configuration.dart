@@ -5,6 +5,7 @@ import 'package:kalender/src/models/view_configurations/view_configuration_expor
 class CustomMultiDayConfiguration extends MultiDayViewConfiguration {
   CustomMultiDayConfiguration({
     required this.name,
+    super.numberOfDaysReal = 3,
     super.numberOfDays = 3,
     super.timelineWidth = 56,
     super.daySeparatorLeftOffset = 8,

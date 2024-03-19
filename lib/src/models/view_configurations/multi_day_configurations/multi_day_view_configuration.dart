@@ -5,6 +5,7 @@ import 'package:kalender/src/models/view_configurations/view_configuration.dart'
 abstract class MultiDayViewConfiguration extends ViewConfiguration {
   MultiDayViewConfiguration({
     int? numberOfDays,
+    int? numberOfDaysReal,
     int? firstDayOfWeek,
     bool? paintWeekNumber,
     double? initialHeightPerMinute,
@@ -28,6 +29,7 @@ abstract class MultiDayViewConfiguration extends ViewConfiguration {
     required int endHour,
   }) {
     _numberOfDays = numberOfDays ?? 1;
+    _numberOfDaysReal = numberOfDaysReal ?? 1;
     assert(
       _numberOfDays >= 1,
       'Number of days must be greater than 0',
@@ -85,6 +87,18 @@ abstract class MultiDayViewConfiguration extends ViewConfiguration {
       'Number of days must be greater than 0',
     );
     _numberOfDays = value;
+    notifyListeners();
+  }
+
+  /// The number of days to display.
+  late int _numberOfDaysReal;
+  int get numberOfDaysReal => _numberOfDaysReal;
+  set numberOfDaysReal(int value) {
+    assert(
+      value >= 1,
+      'Number of days must be greater than 0',
+    );
+    _numberOfDaysReal = value;
     notifyListeners();
   }
 
